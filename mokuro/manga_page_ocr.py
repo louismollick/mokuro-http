@@ -1,5 +1,6 @@
-import cv2
 import numpy as np
+import urllib
+import cv2
 from PIL import Image
 from loguru import logger
 from scipy.signal.windows import gaussian
@@ -7,8 +8,12 @@ from scipy.signal.windows import gaussian
 from comic_text_detector.inference import TextDetector
 from manga_ocr import MangaOcr
 from mokuro import __version__
-from mokuro.cache import cache
-from mokuro.utils import imread
+from pathlib import Path
+
+def imread(path):
+    url_response = urllib.request.urlopen(path)
+    img_array = np.array(bytearray(url_response.read()), dtype=np.uint8)
+    return cv2.imdecode(img_array, cv2.IMREAD_COLOR)
 
 class InvalidImage(Exception):
     def __init__(self, message = "Animation file, Corrupted file or Unsupported type"):
@@ -34,7 +39,7 @@ class MangaPageOcr:
 
         if not self.disable_ocr:
             logger.info('Initializing text detector')
-            self.text_detector = TextDetector(model_path=cache.comic_text_detector, input_size=detector_input_size, device='cpu', act='leaky')
+            self.text_detector = TextDetector(model_path=Path(__file__).parent/'comictextdetector.pt', input_size=detector_input_size, device='cpu', act='leaky')
             self.mocr = MangaOcr(pretrained_model_name_or_path, force_cpu)
 
     def __call__(self, img_path):

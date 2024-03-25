@@ -1,4 +1,3 @@
-fire
 loguru
 manga-ocr
 natsort
