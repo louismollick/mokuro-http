@@ -13,3 +13,4 @@ torchsummary
 tqdm
 yattag
 flask
+gunicorn
