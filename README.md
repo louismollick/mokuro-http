@@ -1,4 +1,10 @@
-# Mokuro with REST API
+# Mokuro with HTTP API
+
+## Usage
+
+```
+curl http://127.0.0.1:8000/?src=https://www.mokuro.moe/manga/Dorohedoro/Dorohedoro%20v01/DH_01%20016.JPG
+```
 
 ## Local development setup
 
