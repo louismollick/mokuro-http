@@ -5,4 +5,8 @@ COPY ./requirements.txt requirements.txt
 COPY ./comic_text_detector/requirements.txt requirements_comic_text_detector.txt
 RUN pip install --no-cache-dir --upgrade -r requirements.txt -r requirements_comic_text_detector.txt
 COPY . .
-CMD ["gunicorn", "--bind", "0.0.0.0:8000", "app:app"]
+
+EXPOSE 3001
+ENV PORT 3001
+
+CMD gunicorn --bind 0.0.0.0:$PORT app:app
