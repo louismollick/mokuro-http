@@ -7,7 +7,7 @@ from mokuro.utils import NumpyEncoder
 
 run_model = MangaPageOcr()
 
-REDIS_URL = os.environ["REDIS_URL"] or "redis://redis"
+REDIS_URL = os.environ.get("REDIS_URL") or "redis://redis"
 
 app = Celery("mokuro", broker=REDIS_URL, backend=REDIS_URL, task_ignore_result=True)
 
