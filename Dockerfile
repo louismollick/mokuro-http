@@ -9,4 +9,5 @@ COPY . .
 EXPOSE 3001
 ENV PORT 3001
 
-CMD gunicorn --bind 0.0.0.0:$PORT app:app
+CMD celery -A mokuro.worker worker --loglevel INFO --pool threads -Q mokuro
+# CMD gunicorn --bind 0.0.0.0:$PORT mokuro.http_api:app

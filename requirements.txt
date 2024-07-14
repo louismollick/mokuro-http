@@ -14,3 +14,4 @@ tqdm
 yattag
 flask
 gunicorn
+celery[redis]

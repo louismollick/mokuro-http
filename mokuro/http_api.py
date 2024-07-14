@@ -1,22 +1,13 @@
-from loguru import logger
-from mokuro.manga_page_ocr import MangaPageOcr
 import json
-import numpy as np
+from loguru import logger
 from flask import Flask, request
 from urllib.parse import urlparse, quote
-
-app = Flask(__name__)
+from mokuro.manga_page_ocr import MangaPageOcr
+from mokuro.utils import NumpyEncoder
 
 run_model = MangaPageOcr()
 
-
-class NumpyEncoder(json.JSONEncoder):
-    def default(self, obj):
-        if isinstance(obj, np.ndarray):
-            return obj.tolist()
-        if isinstance(obj, np.generic):
-            return obj.item()
-        return json.JSONEncoder.default(self, obj)
+app = Flask(__name__)
 
 
 def make_safe_url(url: str) -> str:
