@@ -1,3 +1,4 @@
+import os
 import json
 from loguru import logger
 from celery import Celery
@@ -6,7 +7,9 @@ from mokuro.utils import NumpyEncoder
 
 run_model = MangaPageOcr()
 
-app = Celery("mokuro", broker="redis://", backend="redis://", task_ignore_result=True)
+REDIS_URL = os.environ["REDIS_URL"] or "redis://redis"
+
+app = Celery("mokuro", broker=REDIS_URL, backend=REDIS_URL, task_ignore_result=True)
 
 
 @app.task(name="mokuro")
